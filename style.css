@@ -1,0 +1,10 @@
+body{
+  background-image: url("redwoods.jpg");
+  background-color: #444;
+}
+
+.post {
+  background-color: rgba(60, 114, 118, 0.97);
+  color: rgb(249, 244, 238);
+  margin-top: 5%;
+}
