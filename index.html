@@ -19,16 +19,18 @@
         <div class='col-xs-10 col-xs-offset-1 col-sm-8 col-sm-offset-2'>
           <form>
             <textarea placeholder="to post" rows="10" required></textarea>
-            <button type="submit">Post</button>
+            <button class="btn" type="submit">Post</button>
           </form>
           <div id="posts">
             <div class="row post" hidden>
               <div class='col-xs-10 col-xs-offset-1 col-sm-8 col-sm-offset-2'>
-                <div class="author-name"></div>
-                <div class="timestamp"></div>
-                <div class="text">
-                  <p>This is like a post</p>
+                <div class="spritz" hidden>
+                  Sanity Check.
                 </div>
+                <div class="author-name"></div>
+                <button class="btn spritz">Spritz</button>
+                <div class="timestamp"></div>
+                <div class="text">This is like a post, but not.</div>
               </div>
             </div>
           </div>
@@ -38,7 +40,6 @@
   </div>
   <script src='https://code.jquery.com/jquery-2.1.4.min.js'></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-  <script src='SpritzletInit.js'></script>
   <script src='script.js'></script>
 </body>
 </html>

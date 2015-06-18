@@ -2,7 +2,15 @@ var Blog = {
   db: new Firebase("https://collinwebb.firebaseio.com"),
   init: function() {
     Blog.login();
-    // BMloader(); //make on click and fixed top.
+    Blog.db.onAuth(function(authData) {
+      if (authData) {
+        Blog.currentUser = authData.google;
+        Blog.render();
+        console.log("Authenticated with uid:", authData.uid);
+      } else {
+        console.log("Client unauthenticated.");
+      }
+    });
   },
 
   login: function() {
@@ -16,24 +24,30 @@ var Blog = {
   },
   render: function() {
     var blog = $("#blog");
-    blot.find("form").submit(function(){
+    blog.find("form").submit(function(){
       var post = blog.find("textarea").val();
       Blog.postsRef.push({
         authorName: Blog.currentUser.displayName,
-        text: postText,
+        text: post,
         postTime: Firebase.ServerValue.TIMESTAMP
       });
       return false;
     });
-    var templatePost = $("#posts .post:last"), currentPost;
-    Blog.postsRef.on("child_added", function(snap){
-      var blogPost = snap.val();
-      var postTime = new Date(blogPost.postTime).toLocaleString();
-      currentPost = templatePost.clone().show();
-      currentPost.find(".author-name").text(blogPost.authorName);
-      currentPost.find(".timestamp").text(postTime);
-      currentPost.find(".text").text(blogPost.text);
-      $("#posts").prepend(currentPost);
+    var templatePost = $("#posts .post:last"), currentPost, post, posts = [];
+    Blog.postsRef.on("value", function(snap){
+      var blogPosts = snap.val();
+      for (var key in blogPosts){
+        post = blogPosts[key];
+        var postTime = new Date(post.postTime).toLocaleString();
+        currentPost = templatePost.clone().show();
+
+        currentPost.find(".author-name").text(post.authorName);
+        currentPost.find(".timestamp").text(postTime);
+        currentPost.find(".text").text(post.text);
+
+        posts.unshift(currentPost);
+      }
+      $("#posts").prepend(posts);
     });
   },
 };
